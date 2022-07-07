@@ -16,7 +16,7 @@ public class VehicleRentApp {
         VehicleRentService vehicleRentService = new VehicleRentServiceImpl();
 
 
-        try(BufferedReader br = new BufferedReader(new FileReader("src/main/resources/"+args[0]))) {
+        try(BufferedReader br = new BufferedReader(new FileReader(args[0]))) {
 
             String line = br.readLine();
             while (line!= null) {
