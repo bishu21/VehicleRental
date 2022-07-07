@@ -61,6 +61,7 @@ Separation of concerns must be taken care.
 Solution should be extensible.
 Writing all the necessary Unit tests is expected.
 Necessary design patterns must be implemented.
+
 Naming variable conventions.
 Input needs to be read from a text file, and output should be printed to console. Your program should execute and take the location to the test file as a parameter.
 Input needs to be read from a text file, and output should be printed to console. Your program should execute and take the location to the test file as parameter.
