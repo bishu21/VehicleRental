@@ -5,6 +5,9 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class VehicleRentApp {
@@ -23,7 +26,8 @@ public class VehicleRentApp {
                 String action = inputs[0];
                 if (action.equals("ADD_BRANCH")) {
 
-                    System.out.println(vehicleRentService.addBranch(inputs[1], Set.of(inputs[2].split(","))));
+                    System.out.println(vehicleRentService.addBranch(inputs[1], new HashSet<>(
+                            Arrays.asList(inputs[2].split(",")))));
 
                 } else if(action.equals("ADD_VEHICLE")) {
 
