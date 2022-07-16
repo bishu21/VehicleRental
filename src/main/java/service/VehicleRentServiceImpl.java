@@ -12,6 +12,7 @@ public class VehicleRentServiceImpl implements VehicleRentService {
     private PriceStrategy priceStrategy;
 
     private Map<String, Branch> branchMap = new Hashtable<>();
+    private Set<Vehicle> hashTable = new HashSet<>();
     private Map<String, Map<String, List<Booking>>> branchBookingMap = new HashMap<>();
     int count=1;
 
@@ -75,20 +76,37 @@ public class VehicleRentServiceImpl implements VehicleRentService {
             priceStrategy = new PriceStrategyImpl();
         }
 
+        System.out.println("Starting book --:");
+
         for (Vehicle item : branch.getVehicleList()) {
             if (!item.getType().equals(type)) {
                 continue;
             }
-            List<Booking> bookings = bookingMap.getOrDefault(item.getId(), new ArrayList<>());
-            if (bookings.stream().noneMatch(it -> checkOverlap(it, startTime, endTime))) {
-                Booking booking = new Booking(count++, branchId, item.getId(), startTime, endTime,
-                        0.0);
-                double price = priceStrategy.getPrice(booking, item);
-                booking.setPrice(price);
-                bookings.add(booking);
-                bookingMap.put(item.getId(), bookings);
-                return booking.getPrice();
+            if (hashTable.contains(item)) {
+                continue;
             }
+
+            synchronized (item) {
+                hashTable.add(item);
+                System.out.println("Taking lock on item = " + item);
+                try {
+                    Thread.sleep(5*1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                List<Booking> bookings = bookingMap.getOrDefault(item.getId(), new ArrayList<>());
+                if (bookings.stream().noneMatch(it -> checkOverlap(it, startTime, endTime))) {
+                    Booking booking = new Booking(count++, branchId, item.getId(), startTime, endTime,
+                            0.0);
+                    double price = priceStrategy.getPrice(booking, item);
+                    booking.setPrice(price);
+                    bookings.add(booking);
+                    bookingMap.put(item.getId(), bookings);
+                    System.out.println("Booked booking = "+ booking);
+                    return booking.getPrice();
+                }
+            }
+            hashTable.remove(item);
         }
         return -1;
     }

@@ -1,3 +1,4 @@
+import org.junit.jupiter.api.Test;
 import service.VehicleRentService;
 import service.VehicleRentServiceImpl;
 
@@ -7,14 +8,20 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
-public class VehicleRentApp {
-    public static void main(String[] args) {
+public class VehicleRentTest {
 
+    @Test
+    public void testMultiThreading() {
         VehicleRentService vehicleRentService = new VehicleRentServiceImpl();
+        ExecutorService executorService = Executors.newFixedThreadPool(2);
 
 
-        try(BufferedReader br = new BufferedReader(new FileReader(args[0]))) {
+        try(BufferedReader br = new BufferedReader(new FileReader("src/main/resources/input.txt"))) {
 
             String line = br.readLine();
             while (line!= null) {
@@ -33,9 +40,13 @@ public class VehicleRentApp {
                             Integer.parseInt(inputs[4])));
 
                 } else if(action.equals("BOOK")) {
-
-                    System.out.println(vehicleRentService.bookVehicle(inputs[1], inputs[2], Integer.parseInt(inputs[3]),
+                    Future<Double> result = executorService.submit(() -> vehicleRentService.bookVehicle(inputs[1], inputs[2], Integer.parseInt(inputs[3]),
                             Integer.parseInt(inputs[4])));
+                    Thread.sleep(2*1000);
+                    Future<Double> result1 = executorService.submit(() -> vehicleRentService.bookVehicle(inputs[1], inputs[2], Integer.parseInt(inputs[3]),
+                            Integer.parseInt(inputs[4])));
+                    System.out.println(result.get());
+                    System.out.println(result1.get());
 
                 } else if (action.equals("DISPLAY_VEHICLES")) {
                     System.out.println(vehicleRentService.getAvailableVehicle(inputs[1], Integer.parseInt(inputs[2]),
@@ -53,7 +64,10 @@ public class VehicleRentApp {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
-
     }
 }
