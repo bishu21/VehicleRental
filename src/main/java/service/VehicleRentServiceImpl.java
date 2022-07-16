@@ -12,7 +12,7 @@ public class VehicleRentServiceImpl implements VehicleRentService {
     private PriceStrategy priceStrategy;
 
     private Map<String, Branch> branchMap = new Hashtable<>();
-    private Set<Vehicle> hashTable = new HashSet<>();
+
     private Map<String, Map<String, List<Booking>>> branchBookingMap = new HashMap<>();
     int count=1;
 
@@ -82,12 +82,10 @@ public class VehicleRentServiceImpl implements VehicleRentService {
             if (!item.getType().equals(type)) {
                 continue;
             }
-            if (hashTable.contains(item)) {
-                continue;
-            }
+
 
             synchronized (item) {
-                hashTable.add(item);
+
                 System.out.println("Taking lock on item = " + item);
                 try {
                     Thread.sleep(5*1000);
@@ -106,7 +104,7 @@ public class VehicleRentServiceImpl implements VehicleRentService {
                     return booking.getPrice();
                 }
             }
-            hashTable.remove(item);
+
         }
         return -1;
     }

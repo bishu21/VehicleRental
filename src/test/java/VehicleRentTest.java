@@ -42,9 +42,10 @@ public class VehicleRentTest {
                 } else if(action.equals("BOOK")) {
                     Future<Double> result = executorService.submit(() -> vehicleRentService.bookVehicle(inputs[1], inputs[2], Integer.parseInt(inputs[3]),
                             Integer.parseInt(inputs[4])));
-                    Thread.sleep(2*1000);
-                    Future<Double> result1 = executorService.submit(() -> vehicleRentService.bookVehicle(inputs[1], inputs[2], Integer.parseInt(inputs[3]),
-                            Integer.parseInt(inputs[4])));
+
+                    Future<Double> result1 = executorService.submit(() -> vehicleRentService.bookVehicle(inputs[1],
+                            inputs[2], 4,
+                            5));
                     System.out.println(result.get());
                     System.out.println(result1.get());
 
