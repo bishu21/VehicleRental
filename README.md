@@ -1,31 +1,35 @@
 # VehicleRental
 
-Vehicle Rental
-The Challenge
 
-Rent different kinds of vehicles such as cars and bikes.
+## The Challenge
 
-Features:
-Rental service has multiple branches throughout the city.
-Each branch has a limited number of different kinds of vehicles.
-Each vehicle can be booked with a predefined fixed price.
-Each vehicle can be booked in multiples of 1-hour slots each. (For simplicity, assume slots of a single day)
-Requirements:
-Onboard a new branch with available vehicles.
-Onboard new vehicle(s) of an existing type to a particular branch.
-Rent a vehicle for a time slot and a vehicle type(the lowest price as the default choice extendable to any other strategy).
-Display available vehicles for a given branch sorted on price.
-The vehicle will have to be dropped at the same branch where it was picked up.
-Bonus question:
+**Rent different kinds of vehicles such as cars and bikes.**
+
+**_Features:_**
+
+- Rental service has multiple branches throughout the city.
+- Each branch has a limited number of different kinds of vehicles.
+- Each vehicle can be booked with a predefined fixed price.
+- Each vehicle can be booked in multiples of 1-hour slots each. (For simplicity, assume slots of a single day)
+**_Requirements_:**
+1. Onboard a new branch with available vehicles.
+2. Onboard new vehicle(s) of an existing type to a particular branch.
+3. Rent a vehicle for a time slot and a vehicle type(the lowest price as the default choice extendable to any other strategy).
+4. Display available vehicles for a given branch sorted on price.
+5. The vehicle will have to be dropped at the same branch where it was picked up.
+## Bonus question:
 Dynamic pricing – demand vs supply. If 80% of cars in a particular branch are booked, increase the price by 10%.
 Input and Output scenarios:
+```
 COMMAND	OUTPUT	DESCRIPTION
 ADD_BRANCH	TRUE if the operation succeeds else FALSE	onboard branch (Branch Name, Vehicle Type)
 ADD_VEHICLE	TRUE if the operation succeeds else FALSE	onboard vehicle - (Branch Name, Vehicle Type, vehicle id, price)
 BOOK	Booking Price, if booking succeeds else -1	book a vehicle - (Branch id, vehicle type, start time, end time)
 DISPLAY_VEHICLES	Vehicle Ids, comma-separated	display all available vehicles for a branch, sorted on price ( Branch id, start time, end time )
-SAMPLE INPUT-OUTPUT 1
-INPUT	OUTPUT
+```
+### SAMPLE INPUT-OUTPUT 1
+###INPUT	                  OUTPUT
+```
 ADD_BRANCH B1 CAR,BIKE,VAN	TRUE
 ADD_VEHICLE B1 CAR V1 500	TRUE
 ADD_VEHICLE B1 CAR V2 1000	TRUE
@@ -37,6 +41,7 @@ BOOK B1 CAR 1 3	1000
 BOOK B1 BIKE 2 3	250
 BOOK B1 BIKE 2 5	900
 DISPLAY_VEHICLES B1 1 5	V2
+```
 Other Details:
 Use the in-memory store.
 Do not create any UI for the application.
@@ -66,6 +71,6 @@ Naming variable conventions.
 Input needs to be read from a text file, and output should be printed to console. Your program should execute and take the location to the test file as a parameter.
 Input needs to be read from a text file, and output should be printed to console. Your program should execute and take the location to the test file as parameter.
 
-You can refer our help documents here - https://help.geektrust.com
+[You can refer our help documents here](https://help.geektrust.com)
 
-You can read build instructions here - https://github.com/geektrust/coding-problem-artefacts
+[You can read build instructions here](https://github.com/geektrust/coding-problem-artefacts)
